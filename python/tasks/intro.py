@@ -1,14 +1,14 @@
 """
 Question: 1
-    Berilgan:
+    Task:
         Uchta sondan eng kattasini
         topish algorithmini toping.
 
-    Formula:
+    Example:
         a,b,c o'zgaruvchilar yaratamiz
         (a and b) < c yoki (a and c) < b yoki (c and b) < a.
 
-    Yechish:
+    Tools:
         If condition bilan.
 
 Question 2:

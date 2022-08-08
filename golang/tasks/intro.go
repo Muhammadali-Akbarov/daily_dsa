@@ -15,7 +15,7 @@ Question 2:
     1 dan N gacha bo'lgan sonlarni
     ko'paytamsini chiqaring.
 */
-package simple
+package intro
 
 type Numbers struct {
 	first, second, third int
