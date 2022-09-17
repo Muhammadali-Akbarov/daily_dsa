@@ -6,9 +6,7 @@ Question:
         Agar qidirilyotgan massiv ichida mavjud bo'lmasa
         -1 yoki None qiymatni qaytaring.
     Example:
-        myList1 = [1,3,4,6,7,8,10,12,23,45,56,78,99]
-        search(myList,10) -> 6
-        search(myList,11) -> None
+     search(myList,11) -> None
     Tools:
         binary search and linear search
     Hint:
@@ -27,10 +25,9 @@ from unittest import TestCase
 class Searching:
     """Searching object for searching algorithms"""
 
-
     @staticmethod
     def linear_search(_list: List[int], want: int) -> int or None:
-        """Use this staticmethod for  linear search"""
+        """Use this staticmethod for linear search"""
 
         answer: Any = None
         for index, value in enumerate(_list):
@@ -43,9 +40,9 @@ class Searching:
         """Use this staticmethod for binary search"""
 
         low = 0
-        high = len(_list)-1
+        high = len(_list) - 1
         while low <= high:
-            mid = (low + high)//2
+            mid = (low + high) // 2
             guess = _list[mid]
             if guess == want:
                 return mid
@@ -61,7 +58,7 @@ class TestSearching(TestCase):
 
     def setUp(self) -> None:
         self.search = Searching
-        self.list = [1,3,4,6,7,8,10,12,23,45,56,78,99]
+        self.list = [1, 3, 4, 6, 7, 8, 10, 12, 23, 45, 56, 78, 99]
 
     def test_linear_search(self) -> bool:
         """Test for linear search staticmethod"""
@@ -76,4 +73,3 @@ class TestSearching(TestCase):
 
 if __name__ == '__main__':
     main()
-    
