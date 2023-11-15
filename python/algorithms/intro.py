@@ -1,36 +1,31 @@
 """
 Question: 1
     Task:
-        Uchta sondan eng kattasini
-        topish algorithmini toping.
+        Find a maximum value from given lists.
 
     Example:
-        a,b,c o'zgaruvchilar yaratamiz
-        (a and b) < c yoki (a and c) < b yoki (c and b) < a.
+        a,b,c define variables
+        (a and b) < c or (a and c) < b or (c and b) < a.
 
     Tools:
-        If condition bilan.
-
-Question 2:
-    1 dan N gacha bo'lgan sonlarni
-    ko'paytamsini chiqaring.
+        If condition.
 """
-
-import math
-from unittest import main
-from unittest import TestCase
+import unittest
 
 
 class Numbers:
-    """Numbers object"""
-
+    """
+    Numbers object
+    """
     def __init__(self, first: int, second: int, third: int) -> None:
         self.first = first
         self.second = second
         self.third = third
 
     def find_max(self) -> int:
-        """This method finds the maximum value of a given numbers."""
+        """
+        This method finds the maximum value of a given numbers.
+        """
         max_num: int = 0
         if self.first > self.second and self.first > self.third:
             max_num = self.first
@@ -41,14 +36,9 @@ class Numbers:
 
         return max_num
 
-    def factarial(self):
-        """This method multiplies numbers from 1 to N"""
-        return math.factorial(self.first)
 
-
-class TestNumbers(TestCase):
+class TestNumbers(unittest.TestCase):
     """Test for Numbers object"""
-
     def setUp(self) -> None:
         self.obj_first = Numbers(333, 222, 111)
         self.obj_second = Numbers(111, 333, 222)
@@ -60,11 +50,6 @@ class TestNumbers(TestCase):
         self.assertEqual(333, self.obj_second.find_max())
         self.assertEqual(333, self.obj_third.find_max())
 
-    def test_factarial(self) -> int:
-        """Checks that the factarial method of Numbers object"""
-        self.assertEqual(math.factorial(333), self.obj_first.factarial())
-        self.assertEqual(math.factorial(111), self.obj_second.factarial())
-
 
 if __name__ == '__main__':
-    main()
+    unittest.main()

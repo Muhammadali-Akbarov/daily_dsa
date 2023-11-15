@@ -1,0 +1,4 @@
+[MASTER]
+disable=import-error,
+    unnecessary-dunder-call,
+    too-few-public-methods
