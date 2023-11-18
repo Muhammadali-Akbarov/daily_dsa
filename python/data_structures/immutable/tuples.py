@@ -51,20 +51,20 @@ class TestTuples(unittest.TestCase):
         """
         my_tuple = (1, 2, 3)
 
-        a, b, c = my_tuple
-        self.assertEqual(a, 1)
-        self.assertEqual(b, 2)
-        self.assertEqual(c, 3)
+        element_a, element_b, element_c = my_tuple
+        self.assertEqual(element_a, 1)
+        self.assertEqual(element_b, 2)
+        self.assertEqual(element_c, 3)
 
     def test_named_tuples(self) -> None:
         """
         test named tuples.
         """
         Point = namedtuple("Point", ["x", "y"])
-        p = Point(3, 4)
+        element = Point(3, 4)
 
-        self.assertEqual(p.x, 3)
-        self.assertEqual(p.y, 4)
+        self.assertEqual(element.x, 3)
+        self.assertEqual(element.y, 4)
 
     def test_slicing(self) -> None:
         """
