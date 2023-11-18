@@ -1,5 +1,19 @@
 """
-merge sorts
+merge sort is an efficient, stable, comparison-based,
+divide and conquer sorting algorithm, it divides the input array into two halves,
+calls itself for the two halves, and then merges the two sorted halves,
+the merge step is the key operation of the algorithm,
+here’s a detailed explanation of how merge sort works in Python:
+
+divide and conquer:
+    - the list is divided into two (or more) sub lists,
+    repeatedly, until each sublist has only one element (which is inherently sorted)
+    - this dividing step is a straightforward process of splitting the list into halves.
+
+how to works with big O:
+    1) best average and worst case: O((n)log(n))
+    2) O(n) the algorithm requires additional space for temporary arrays
+        used during the merge process.
 """
 import unittest
 

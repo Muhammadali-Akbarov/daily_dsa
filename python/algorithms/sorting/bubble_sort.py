@@ -1,5 +1,19 @@
 """
-bubble sort
+bubble sort is a simple sorting algorithm that works
+by repeatedly stepping through the list to be sorted,
+comparing each pair of adjacent items and swapping them if they are in the wrong order,
+the pass through the list is repeated until no swaps are needed,
+which means the list is sorted, the algorithm gets its name because smaller
+elements "bubble" to the top of the list.
+
+how works with big O:
+    1) best case: O(n) (when the list already sorted)
+    2) average and worst case: O(n^2) (due to nested loops)
+    3) space complexity: O(1) (because it's an in-place sorting algorithm)
+
+use cases:
+    1) bubble sort is used for educational purposes and in cases where simplicity
+    is more important than efficiency, or the list to sort is small.
 """
 import unittest
 from typing import List

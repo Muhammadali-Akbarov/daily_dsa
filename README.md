@@ -32,6 +32,26 @@ Support Group - <a href="https://t.me/+Ng1axYLNyBAyYTRi">Telegram</a> <br/>
 - [Ques](#queues_in_python)
 - [Linked Lists](#linked_lists_in_python)
 - [Skip Lists (still learning..)](#skip_lists_in_python)
+
+
+## Algorithms
+
+### Sorting
+- [BubbleSort](#bubble_sort_in_python)
+- [MergeSort](#merge_sort_in_python)
+- [QuickSort](#quick_sort_in_python)
+- [SelectSort](#select_sort_in_python)
+
+#### Compire all sort algorithms.
+```python
+execute in command-line: python3 python/compire_sorting.py
+
+Total execution time of class name: <function QuickSort.sort at 0x102ed1580> method: sort time: 0.009923696517944336 seconds
+Total execution time of class name: <function MergeSort.sort at 0x102e98d60> method: sort time: 0.02179718017578125 seconds
+Total execution time of class name: <function SelectionSort.sort at 0x102ed2200> method: sort time: 2.4862358570098877 seconds
+Total execution time of class name: <function BubbleSort.sort at 0x102ed1c60> method: sort time: 3.3722269535064697 seconds
+```
+
 # Methods
 
 ## arrays_in_python
@@ -1522,6 +1542,392 @@ class TestSkipList(unittest.TestCase):
         test display list.
         """
         self.skip_list.display_list()
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## bubble_sort_in_python
+```python
+"""
+bubble sort is a simple sorting algorithm that works
+by repeatedly stepping through the list to be sorted,
+comparing each pair of adjacent items and swapping them if they are in the wrong order,
+the pass through the list is repeated until no swaps are needed,
+which means the list is sorted, the algorithm gets its name because smaller
+elements "bubble" to the top of the list.
+
+how works with big O:
+    1) best case: O(n) (when the list already sorted)
+    2) average and worst case: O(n^2) (due to nested loops)
+    3) space complexity: O(1) (because it's an in-place sorting algorithm)
+
+use cases:
+    1) bubble sort is used for educational purposes and in cases where simplicity
+    is more important than efficiency, or the list to sort is small.
+"""
+import unittest
+from typing import List
+
+from abstract.sorting import Sorting
+
+from decorators.excecution import time_execution
+
+
+class BubbleSort(Sorting):
+    """
+    the bubble sort class.
+    """
+    @staticmethod
+    @time_execution
+    def sort(data: List) -> List:
+        """
+        bubble sort method.
+        """
+        lenth = len(data)
+        for i in range(lenth):
+            for j in range(0, lenth-i-1):
+                if data[j] > data[j+1]:
+                    data[j], data[j+1] = data[j+1], data[j]
+
+        return data
+
+
+class TestBubbleSort(unittest.TestCase):
+    """
+    the test bubble sort class.
+    """
+    def setUp(self):
+        """
+        setting-up the test bubble sort class.
+        """
+        self.sorting = BubbleSort()
+
+    def test_empty_list(self):
+        """
+        test the empty list method
+        """
+        arr = []
+        self.assertEqual(self.sorting.bubble_sort(arr), [])
+
+    def test_sorted_list(self):
+        """
+        test the sorted list method
+        """
+        arr = [1, 2, 3, 4, 5]
+        self.assertEqual(self.sorting.bubble_sort(arr), [1, 2, 3, 4, 5])
+
+    def test_reverse_sorted_list(self):
+        """
+        test the reverse sorted list method.
+        """
+        arr = [5, 4, 3, 2, 1]
+        self.assertEqual(self.sorting.bubble_sort(arr), [1, 2, 3, 4, 5])
+
+    def test_unsorted_list(self):
+        """
+        test the unsorted list method.
+        """
+        arr = [3, 6, 1, 8, 4, 5]
+        self.assertEqual(self.sorting.bubble_sort(arr), [1, 3, 4, 5, 6, 8])
+
+    def test_duplicate_elements(self):
+        """
+        test the dublicate elements method.
+        """
+        arr = [3, 6, 1, 3, 4, 5]
+        self.assertEqual(self.sorting.bubble_sort(arr), [1, 3, 3, 4, 5, 6])
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## merge_sort_in_python
+```python
+"""
+merge sort is an efficient, stable, comparison-based,
+divide and conquer sorting algorithm, it divides the input array into two halves,
+calls itself for the two halves, and then merges the two sorted halves,
+the merge step is the key operation of the algorithm,
+here’s a detailed explanation of how merge sort works in Python:
+
+divide and conquer:
+    - the list is divided into two (or more) sub lists,
+    repeatedly, until each sublist has only one element (which is inherently sorted)
+    - this dividing step is a straightforward process of splitting the list into halves.
+
+how to works with big O:
+    1) best average and worst case: O((n)log(n))
+    2) O(n) the algorithm requires additional space for temporary arrays
+        used during the merge process.
+"""
+import unittest
+
+from typing import List
+
+from abstract.sorting import Sorting
+
+from decorators.excecution import time_execution
+
+
+class MergeSort(Sorting):
+    """
+    the sorting class
+    """
+    @time_execution
+    def sort(self, data: List):
+        """
+        the merge sort method.
+        """
+        if len(data) > 1:
+            mid = len(data) // 2  # Finding the mid of the array
+            left = data[:mid]  # Dividing the array elements into 2 halves
+            right = data[mid:]
+
+            self.sort(left)  # Sorting the first half
+            self.sort(right)  # Sorting the second half
+
+            i = j = k = 0
+
+            # Copy data to temp arrays L[] and R[]
+            while i < len(left) and j < len(right):
+                if left[i] < right[j]:
+                    data[k] = left[i]
+                    i += 1
+                else:
+                    data[k] = right[j]
+                    j += 1
+                k += 1
+
+            # Checking if any element was left
+            while i < len(left):
+                data[k] = left[i]
+                i += 1
+                k += 1
+
+            while j < len(right):
+                data[k] = right[j]
+                j += 1
+                k += 1
+
+
+class TestMergeSort(unittest.TestCase):
+    """
+    the test merge sort class.
+    """
+    def test_merge_sort(self):
+        """
+        test merge sort method.
+        """
+        sort_obj = MergeSort()
+        test_cases = [
+            ([], []),
+            ([1], [1]),
+            ([3, 2, 1], [1, 2, 3]),
+            ([5, 3, 8, 6, 7, 2], [2, 3, 5, 6, 7, 8]),
+            ([10, -1, 2, 11, 5], [-1, 2, 5, 10, 11])
+        ]
+
+        for test_input, expected_output in test_cases:
+            with self.subTest(
+                test_input=test_input,
+                expected_output=expected_output
+            ):
+                sort_obj.sort(test_input)
+                self.assertEqual(test_input, expected_output)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## quick_sort_in_python
+```python
+"""
+divide and conquer
+
+how to works big big O:
+    1) best and average case: O(n log(n))
+    2) worst case: O(n^2) (but this is rare with good pivot choice)
+
+use cases:
+    quicksort is best used when average-case performance is important and additional
+    space for merges is not available, it's a common choice for internal sorting
+    in many standard libraries due to its practical efficiency.
+"""
+import unittest
+
+from typing import List
+
+from abstract.sorting import Sorting
+
+from decorators.excecution import time_execution
+
+
+class QuickSort(Sorting):
+    """
+    the sorting class.
+    """
+    @time_execution
+    def sort(self, data: List):
+        """
+        quick sort method.
+        """
+        if len(data) <= 1:
+            return data
+
+        pivot = data[len(data) // 2]
+        left = [x for x in data if x < pivot]
+        middle = [x for x in data if x == pivot]
+        right = [x for x in data if x > pivot]
+
+        return self.sort(left) + middle + self.sort(right)
+
+
+class TestQuickSort(unittest.TestCase):
+    """
+    quick sort test cases.
+    """
+    def setUp(self):
+        self.sorting = QuickSort()
+
+    def test_empty_list(self):
+        """
+        test the empty list method.
+        """
+        empty_list = []
+
+        self.assertEqual(
+            self.sorting.quick_sort(empty_list),
+            empty_list
+        )
+
+    def test_single_element(self):
+        """
+        test the single element.
+        """
+        single_element = [1]
+
+        self.assertEqual(
+            self.sorting.quick_sort(single_element),
+            single_element
+        )
+
+    def test_sorted_list(self):
+        """
+        test sorted list.
+        """
+        sorted_list = [1, 2, 3, 4, 5]
+
+        self.assertEqual(
+            self.sorting.quick_sort(sorted_list),
+            [1, 2, 3, 4, 5]
+        )
+
+    def test_reverse_sorted_list(self):
+        """
+        test reverse sorted list.
+        """
+        unsorted_list = [5, 4, 3, 2, 1]
+        sorted_list = [1, 2, 3, 4, 5]
+
+        self.assertEqual(
+            self.sorting.quick_sort(unsorted_list),
+            sorted_list
+        )
+
+    def test_unsorted_list(self):
+        """
+        test unsorted list.
+        """
+        unsorted_list = [3, 6, 1, 8, 4, 5]
+        sorted_list = [1, 3, 4, 5, 6, 8]
+
+        self.assertEqual(
+            self.sorting.quick_sort(unsorted_list),
+            sorted_list
+        )
+
+    def test_duplicate_elements(self):
+        """
+        test duplicate elements.
+        """
+        dublicate_list = [3, 6, 1, 3, 4, 5]
+        sorted_list = [1, 3, 3, 4, 5, 6]
+
+        self.assertEqual(
+            self.sorting.quick_sort(dublicate_list),
+            sorted_list
+        )
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+
+## select_sort_in_python
+```python
+"""
+selection sort creates a new empty array
+and compares gives array's elements and sorts to new array.
+
+how to works with big O:
+    time complexity: best, average and worst case: O(n^2), this is because
+        of the two nested loops, each running N times in the worst case.
+
+    space complexity:
+        O(1). the algorithm only uses a constant amount of additional memory space, making it an in-place sorting algorithm.
+"""
+import unittest
+from typing import List
+
+from abstract.sorting import Sorting
+from decorators.excecution import time_execution
+
+
+class SelectionSort(Sorting):
+    """
+    selection sort class
+    """
+    @staticmethod
+    @time_execution
+    def sort(data: List):
+        """
+        selection sort, BIG O n*n
+        """
+        for i, _ in enumerate(data):
+            min_index = i
+            for j in range(i+1, len(data)):
+                if data[min_index] > data[j]:
+                    min_index = j
+            data[i], data[min_index] = data[min_index], data[i]
+
+        return data
+
+
+class SelectionSortTestCase(unittest.TestCase):
+    """
+    the selection test cases.
+    """
+    def setUp(self) -> None:
+        """
+        setting up the test case.
+        """
+        self.selection_sort = SelectionSort()
+
+    def test_selection_sort(self):
+        """
+        test selection sort for given array
+        """
+        unsorted_list = [64, 25, 12, 22, 11]
+        sorted_list = [11, 12, 22, 25, 64]
+
+        self.assertEqual(sorted_list, self.selection_sort.selection_sort(
+            arr=unsorted_list
+        ))
 
 
 if __name__ == '__main__':

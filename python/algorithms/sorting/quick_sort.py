@@ -1,5 +1,14 @@
 """
 divide and conquer
+
+how to works big big O:
+    1) best and average case: O(n log(n))
+    2) worst case: O(n^2) (but this is rare with good pivot choice)
+
+use cases:
+    quicksort is best used when average-case performance is important and additional
+    space for merges is not available, it's a common choice for internal sorting
+    in many standard libraries due to its practical efficiency.
 """
 import unittest
 

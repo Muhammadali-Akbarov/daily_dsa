@@ -1,6 +1,13 @@
 """
 selection sort creates a new empty array
 and compares gives array's elements and sorts to new array.
+
+how to works with big O:
+    time complexity: best, average and worst case: O(n^2), this is because
+        of the two nested loops, each running N times in the worst case.
+
+    space complexity:
+        O(1). the algorithm only uses a constant amount of additional memory space, making it an in-place sorting algorithm.
 """
 import unittest
 from typing import List
