@@ -1,5 +1,5 @@
 """
-compiring
+comparing all sorting algorithms.
 """
 import random
 
