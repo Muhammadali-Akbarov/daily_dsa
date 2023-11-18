@@ -18,13 +18,20 @@ Support Group - <a href="https://t.me/+Ng1axYLNyBAyYTRi">Telegram</a> <br/>
 
 
 ## Data Structures
+
+### Built-in Data Structures
 - [Arrays (Lists in Python)](#arrays_in_python)
 - [Tuples](#tuples_in_python)
 - [Sets](#sets_in_python)
+- [Dictionaries (hash tables)](#dictionaries_in_python)
 - [Strings](#strings_in_python)
 - [Ranges](#range_in_python)
-- [Linked Lists](#linked_lists_in_python)
 
+### Advanced Data Structures
+- [Stacks](#stacks_in_python)
+- [Ques](#queues_in_python)
+- [Linked Lists](#linked_lists_in_python)
+- [Skip Lists (still learning..)](#skip_lists_in_python)
 # Methods
 
 ## arrays_in_python
@@ -164,7 +171,7 @@ features:
 """
 import unittest
 
-from collections import namedtuple
+from collections.abc import namedtuple
 
 
 class TestTuples(unittest.TestCase):
@@ -393,6 +400,119 @@ if __name__ == '__main__':
     unittest.main()
 ```
 
+## dictionaries_in_python
+```python
+""""
+dictionaries in python are a versatile and widely used data structure,
+here's an advanced overview of python dictionaries:
+    internal working:
+        hashing:
+            when a key-value pair is added to a dictionary,
+            python first applies a hash function to the key,
+            this hash function computes an integer value (hash) unique to the key (as much as possible),
+
+        index calculation:
+            the hash value is then used to calculate an index in an internal array (or hash table),
+            this index determines where the key-value pair is stored in the table.
+
+        collision handling:
+            sometimes, two different keys may produce the same hash value (a situation known as a collision).
+            python handles collisions using a method called "open addressing," which involves probing for the next available
+            slot in the hash table.
+
+        dynamic resizing:
+            to maintain efficient operations, python dictionaries dynamically resize,
+            when the table becomes too crowded (determined by a factor called the load factor),
+            python increases the size of the hash table and rehashes all keys to maintain efficiency.
+
+    how works with big O:
+        lookup (my_dict.get(key, None)) O(1)
+        rehashing O(n)
+        deleting O(n)
+"""
+import unittest
+
+
+class TestDictionaryMethods(unittest.TestCase):
+    """
+    test dictionary methods.
+    """
+
+    def test_insertion(self) -> None:
+        """
+        test insertion to dictionary O(1)
+        """
+        my_dict = {}
+        my_dict['name'] = 'Alice'
+
+        self.assertTrue('name' in my_dict)
+        self.assertEqual(my_dict['name'], 'Alice')
+
+    def test_lookup(self) -> None:
+        """
+        test lookup to dictionary
+        """
+        my_dict = {
+            'name': 'Bob',
+            'age': 30
+        }
+
+        self.assertEqual(my_dict['name'], 'Bob')
+        self.assertEqual(my_dict['age'], 30)
+
+        with self.assertRaises(KeyError):
+            _ = my_dict['city']
+
+    def test_deletion(self) -> None:
+        """
+        test the deletion of an existing element.
+        """
+        my_dict = {
+            'name': 'Charlie',
+            'age': 25
+        }
+        del my_dict['name']
+
+        self.assertFalse('name' in my_dict)
+
+        with self.assertRaises(KeyError):
+            del my_dict['city']
+
+    def test_iteration(self) -> None:
+        """
+        test iteration method.
+        """
+        my_dict = {'name': 'David', 'age': 35}
+        keys = []
+        values = []
+
+        for key, value in my_dict.items():
+            keys.append(key)
+            values.append(value)
+
+        self.assertEqual(keys, ['name', 'age'])
+        self.assertEqual(values, ['David', 35])
+
+    def test_default_value(self) -> None:
+        """
+        test the default value.
+        """
+        my_dict = {
+            'name': 'Eve',
+            'age': 40
+        }
+        city = my_dict.get('city', 'Unknown')
+        self.assertEqual(city, 'Unknown')
+
+        name = my_dict.get('name', 'Anonymous')
+        self.assertEqual(name, 'Eve')
+
+
+if __name__ == '__main__':
+    unittest.main()
+
+```
+
 ## strings_in_python
 
 ```python
@@ -591,6 +711,295 @@ class TestDictionaryOperations(unittest.TestCase):
         """
         del self.test_dict['c']
         self.assertNotIn('c', self.test_dict)
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+## stacks_in_python
+```python
+"""
+in python, stacks can be easily implemented using built-in data structures like lists,
+a stack is a linear data structure that follows the last in, first out (LIFO) principle,
+this means that the last element added to the stack will be the first one to be removed.
+
+basic operations of a stack:
+    1) push: add an item to the top of the stack.
+    2) pop: remove and return the top item from the stack.
+        if the stack is empty, this operation might throw an error or return a special value.
+
+    3) peek or top: Return the top element of the stack without removing it.
+    4) is_empty: Check if the stack is empty.
+    5) size: Return the number of elements in the stack.
+
+how works with big O:
+    1) push: O(1)
+    2) pop: O(1)
+    3) peek: O(1)
+    4) is_empty O(1)
+    5) size: O(1)
+    6) space complexity: O(n)
+
+use cases:
+    stacks are widely used in algorithm implementations,
+    function call management (call stack), undo mechanisms in software,
+    and for solving certain types of problems (e.g., balanced parenthesis checking, depth-first search in graphs).
+"""
+import unittest
+
+
+class Stack:
+    """
+    the stack class.
+
+    stack = Stack()
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    print(stack.pop())  # Outputs 3
+    print(stack.peek()) # Outputs 2
+    print(stack.is_empty()) # Outputs False
+    """
+    def __init__(self) -> None:
+        self.stack = []
+
+    def push(self, item) -> None:
+        """
+        append an item to the stack.
+        """
+        self.stack.append(item)
+
+    def pop(self) -> None:
+        """
+        returns pop element.
+        """
+        if not self.is_empty():
+            return self.stack.pop()
+        return "Stack is empty"
+
+    def peek(self) -> None:
+        """
+        returns peek element.
+        """
+        if not self.is_empty():
+            return self.stack[-1]
+        return "Stack is empty"
+
+    def is_empty(self) -> None:
+        """
+        check if stack is empty or not.
+        """
+        return len(self.stack) == 0
+
+    def size(self) -> None:
+        """
+        returns size of stack.
+        """
+        return len(self.stack)
+
+
+class TestStack(unittest.TestCase):
+    """
+    test the stack elements.
+    """
+    def setUp(self):
+        self.stack = Stack()
+
+    def test_push(self):
+        """
+        test the push element.
+        """
+        self.stack.push(1)
+        self.stack.push(2)
+        self.assertEqual(self.stack.peek(), 2)
+
+    def test_pop(self):
+        """
+        test pop.
+        """
+        self.stack.push(1)
+        self.stack.push(2)
+        pop_value = self.stack.pop()
+        self.assertEqual(pop_value, 2)
+        self.assertEqual(self.stack.peek(), 1)
+
+    def test_peek(self):
+        """
+        test peek.
+        """
+        self.stack.push(1)
+        self.assertEqual(self.stack.peek(), 1)
+        self.stack.push(2)
+        self.assertEqual(self.stack.peek(), 2)
+
+    def test_is_empty(self):
+        """
+        test is empty.
+        """
+        self.assertTrue(self.stack.is_empty())
+        self.stack.push(1)
+        self.assertFalse(self.stack.is_empty())
+
+    def test_size(self):
+        """
+        test size.
+        """
+        self.assertEqual(self.stack.size(), 0)
+        self.stack.push(1)
+        self.stack.push(2)
+        self.assertEqual(self.stack.size(), 2)
+
+    def test_pop_empty_stack(self):
+        """
+        test pop empty stack.
+        """
+        self.assertEqual(self.stack.pop(), "Stack is empty")
+
+    def test_peek_empty_stack(self):
+        """
+        test peek empty stack.
+        """
+        self.assertEqual(self.stack.peek(), "Stack is empty")
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+# queues_in_python
+```python
+"""
+queues are fundamental data structures used in computer science
+and programming for managing collections of items in a specific order,
+they follow the first-in-first-out (fifo sometimes works as stack (lifo)) principle,
+which means that the first item added to the queue is the first one to be removed,
+here's some advanced information about queues, including how they work internally.
+    internal implementation of queues:
+        using lists:
+            in python, you can implement a queue using a regular list,
+            however, this approach is not very efficient for large queues because
+            inserting or removing elements from the beginning of a list (using pop(0) or insert(0, item))
+            takes O(n) time complexity due to the need to shift all other elements as a result, it's not
+            recommended to large-scale queues.
+
+        queue module:
+            python provides a built-in queue module that offers different
+            implementations of queues.
+
+        queue operations and big o complexities:
+            enqueue (put): adding an item to the end of a queue
+            (enqueue operation) typically has an average time complexity of O(1)
+            for most queue implementations, in the case of a queue.Queue from the queue module
+            , it may involve acquiring and releasing locks, which can introduce some overhead.
+
+        dequeue (delete): removing an item from the front of the queue (dequeue operation) also typically
+        has an average time complexity of O(1) for most queue implementations, similar to enqueue,
+        thread-safe implementations like queue.Queue may involve acquiring and releasing locks.
+
+        peek: peeking at the front item (without removing) is usually an O(1) operation,
+        as it does not require modifying the queue's internal structure.
+
+        use cases for queues:
+            task scheduling:
+                queues are used in task scheduling systems,
+                such as managing tasks in a multithreaded or multiprocessing environment.
+
+            breadth-first search (bfs):
+                queues are essential in graph algorithms like bfs,
+                where they help explore nodes at different levels in a graph.
+
+            print queue:
+                 in operating systems, print jobs are often managed using queues
+                 to ensure they are processed in the order they are received.
+
+            message queues:
+                in distributed systems, message queues are used for communication between components,
+                systems like rabbitmq and apache kafka are popular choices for implementing message queues.
+
+            job queues:
+                in web applications, job queues are used to handle asynchronous tasks
+                like sending emails or processing background jobs.
+
+            task management:
+                queues can be used for managing tasks in various scenarios,
+                such as handling customer service requests in a call center
+                or processing user actions in a web application.
+
+            queues are versatile data structures with numerous applications
+            in computer science and software development, understanding their
+            internal workings and complexities is crucial for designing efficient
+            systems and algorithms that rely on queues.
+"""
+import queue
+import unittest
+
+
+class TestQueueMethods(unittest.TestCase):
+    """
+    test queue methods.
+    """
+    def test_queue_queue(self) -> None:
+        """
+        test queue queue method.
+        """
+        que = queue.Queue()
+        que.put(1)
+        que.put(2)
+        self.assertEqual(que.qsize(), 2)
+
+        item1 = que.get()
+        item2 = que.get()
+        self.assertEqual(item1, 1)
+        self.assertEqual(item2, 2)
+        self.assertTrue(que.empty())
+
+    def test_lifo_queue(self) -> None:
+        """
+        test lifo queue method.
+        """
+        que = queue.LifoQueue()
+        que.put(1)
+        que.put(2)
+        self.assertEqual(que.qsize(), 2)
+
+        item1 = que.get()
+        item2 = que.get()
+        self.assertEqual(item1, 2)
+        self.assertEqual(item2, 1)
+        self.assertTrue(que.empty())
+
+    def test_priority_queue(self) -> None:
+        """
+        test priority queue.
+        """
+        pq = queue.PriorityQueue()
+        pq.put((3, "high priority"))
+        pq.put((1, "highest priority"))
+        pq.put((2, "medium priority"))
+
+        item1 = pq.get()
+        item2 = pq.get()
+        item3 = pq.get()
+        self.assertEqual(item1[1], "highest priority")
+        self.assertEqual(item2[1], "medium priority")
+        self.assertEqual(item3[1], "high priority")
+        self.assertTrue(pq.empty())
+
+    def test_simple_queue(self) -> None:
+        """
+        test the simple queue.
+        """
+        if hasattr(queue, 'SimpleQueue'):
+            q = queue.SimpleQueue()
+            q.put(1)
+            q.put(2)
+            self.assertEqual(q.empty(), False)
+            item1 = q.get()
+            item2 = q.get()
+            self.assertEqual(item1, 1)
+            self.assertEqual(item2, 2)
+            self.assertEqual(q.empty(), True)
 
 
 if __name__ == '__main__':
@@ -885,6 +1294,234 @@ class TestDoublyLinkedList(unittest.TestCase):
         self.assertEqual(self.dll.get_next(1), 2)
         self.assertEqual(self.dll.get_previous(2), 1)
         self.assertIsNone(self.dll.get_previous(1))
+
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+# skip_lists_in_python
+```python
+"""
+skip lists are an advanced data structure that
+provide an alternative to balanced trees for implementing
+ordered sequences of elements, enabling fast search, insertion,
+and deletion operations. They are not a built-in data structure in Python,
+but they can be implemented using Python's classes and object-oriented features.
+
+basic concept of a skip list:
+    a skip list is made up of layers of linked lists,
+    the bottom layer is an ordinary linked list of all the elements,
+    each higher layer acts as an "express lane," where nodes skip over several elements,
+    allowing faster traversal of the list.
+
+key components of a skip list:
+    1) layers: multiple layers of linked lists,
+        the bottom layer contains all elements, higher layers allow for faster traversal by skipping nodes.
+
+    2)  nodes: similar to a standard linked list, each node contains data and pointers, in skip lists
+        have multiple pointers, one for each level of the list they participate in.
+
+    3) probabilistic balancing:
+        instead of rigid balancing rules, skip lists use randomization to determine the levels of each node.
+
+how to skip lists work:
+
+1) search:
+    - start from the highest level and traverse the list.
+    - if the next node is greater than the search value, move down a level.
+    - continue until the bottom level is reached.
+
+2) insertion:
+    search for the position where the new element should be inserted
+    randomly determine the levels for the new node
+    insert the node at each of these levels.
+
+3) deletion:
+    search for the node to delete.
+    remove the node from each level in which it appears.
+
+how to works with big O:
+    search, insertion, deletion:
+    1) average case O(log(n))
+    2) worst case O(n)
+
+usage and applications:
+    skip lists are used in database and file system for indexing.
+    they provide a similar alternative to balanced trees.
+    they are used in situations where frequent updates are required, and balanced
+    tree rotations costly.
+"""
+import random
+import unittest
+
+
+class Node:
+    """
+    Node.
+    """
+    def __init__(self, key, level) -> None:
+        self.key = key
+        self.forward = [None] * (level + 1)
+
+
+class SkipList:
+    """
+    the skip list class.
+
+    skip_list = SkipList(3, 0.5)
+    skip_list.insert(3)
+    skip_list.insert(6)
+    skip_list.insert(7)
+    skip_list.insert(9)
+    skip_list.insert(12)
+    skip_list.insert(19)
+    skip_list.insert(17)
+
+    skip_list.display_list()
+
+    print("Search for 19:", skip_list.search(19))
+    skip_list.delete(19)
+    print("Search for 19 after deletion:", skip_list.search(19))
+    skip_list.display_list()
+
+    """
+    def __init__(self, max_level, p) -> None:
+        self.max_level = max_level
+        self.p = p  # Probability for random level generation
+        self.header = Node(-1, max_level)
+        self.level = 0
+
+    def random_level(self) -> None:
+        """
+        random level.
+        """
+        lvl = 0
+        while random.random() < self.p and lvl < self.max_level:
+            lvl += 1
+        return lvl
+
+    def insert(self, key) -> None:
+        """
+        the insert method.
+        """
+        update = [None] * (self.max_level + 1)
+        current = self.header
+
+        for i in range(self.level, -1, -1):
+            while current.forward[i] and current.forward[i].key < key:
+                current = current.forward[i]
+            update[i] = current
+
+        current = current.forward[0]
+
+        if current is None or current.key != key:
+            rlevel = self.random_level()
+
+            if rlevel > self.level:
+                for i in range(self.level + 1, rlevel + 1):
+                    update[i] = self.header
+                self.level = rlevel
+
+            new_node = Node(key, rlevel)
+
+            for i in range(rlevel + 1):
+                new_node.forward[i] = update[i].forward[i]
+                update[i].forward[i] = new_node
+
+    def search(self, key) -> None:
+        """
+        the search method.
+        """
+        current = self.header
+        for i in range(self.level, -1, -1):
+            while current.forward[i] and current.forward[i].key < key:
+                current = current.forward[i]
+        current = current.forward[0]
+        if current and current.key == key:
+            return True
+        return False
+
+    def delete(self, key) -> None:
+        """
+        the delete method.
+        """
+        update = [None] * (self.max_level + 1)
+        current = self.header
+
+        for i in range(self.level, -1, -1):
+            while current.forward[i] and current.forward[i].key < key:
+                current = current.forward[i]
+            update[i] = current
+
+        current = current.forward[0]
+
+        if current is not None and current.key == key:
+            for i in range(self.level + 1):
+                if update[i].forward[i] != current:
+                    break
+                update[i].forward[i] = current.forward[i]
+
+            while self.level > 0 and self.header.forward[self.level] is None:
+                self.level -= 1
+
+    def display_list(self) -> None:
+        """
+        display skip lists.
+        """
+        print("Skip List")
+        for lvl in range(self.level + 1):
+            print("Level {}: ".format(lvl), end=" ")
+            node = self.header.forward[lvl]
+            while node is not None:
+                print(node.key, end=" ")
+                node = node.forward[lvl]
+            print("")
+
+
+class TestSkipList(unittest.TestCase):
+    """
+    test skip list.
+    """
+    def setUp(self):
+        self.skip_list = SkipList(3, 0.5)
+        for i in range(1, 11):
+            self.skip_list.insert(i)
+
+    def test_search(self) -> None:
+        """
+        test search method.
+        """
+        for i in range(1, 11):
+            self.assertTrue(self.skip_list.search(i))
+        self.assertFalse(self.skip_list.search(20))
+
+    def test_insert(self) -> None:
+        """
+        test insert method.
+        """
+        self.skip_list.insert(12)
+        self.assertTrue(self.skip_list.search(12))
+
+    def test_delete(self) -> None:
+        """
+        test delete method.
+        """
+        self.skip_list.delete(5)
+        self.assertFalse(self.skip_list.search(5))
+
+    def test_random_level(self) -> None:
+        """
+        test random level.
+        """
+        level = self.skip_list.random_level()
+        self.assertTrue(0 <= level <= self.skip_list.max_level)
+
+    def test_display_list(self) -> None:
+        """
+        test display list.
+        """
+        self.skip_list.display_list()
 
 
 if __name__ == '__main__':
